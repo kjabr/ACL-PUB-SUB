@@ -109,3 +109,8 @@ You can have few or many switches (as in this example) gettting updated at about
 
 - The notification sent via Kafka includes the file name already. However the script included at the moment only retrieves the "CA_Security_ACL_list_2017" file. A little more can be made to make that match what is in the notification. Here you would have a different ACL list for different Kafka topics.
 
+## To do:
+
+- Add instructions to make sure the script in Guestshell survive reboots
+- Add Kafka topic to the commit_acls.py script
+- Change the pub-sub-acls.py script where it would parse the file name from the Kafka notification
