@@ -6,13 +6,12 @@ Use ACLs in a Pub-Sub model on Cisco switches and Routers
 Imagine ACLs that live on many switches and routers. Currently to keep them up to date requires an admin or a tool to connect to each device to make the change. Doesn't matter if that is done via SSH or an API. If you have hundreds or even thousands of devices that becomes pretty cumbersome. This project solves this problem.
 
 ## Solution:
-
-The solution is: 
-- Centralize the ACLs on a server. Say a Linux server. Where it allows the admin to make the changes. 
-- Use a notification channel (Kafka in this project), the network devices would get a quick alert that an update is available.
-- On the network devices pull the appropriate ACL file from the centralized server. Here using an http-GET
+ 
+- Centralize the ACLs on a server. Say a Linux server. Where it allows the admin to make the add/remove ACLs. 
+- Use a notification channel (Kafka in this project) where the network devices would get a quick alert that an update is available.
+- On the network devices pull the appropriate ACL file from the centralized server. Here using an http-GET using PyCurl
 - Network devices receive the updated list. Check the ACLs running locally. Calculate the diff and then apply the changes
-- Network devices wait for the next notification
+- Network devices wait for the next notification and then next update
 
 ## Components:
 
@@ -92,3 +91,8 @@ Now go back the Nexus CLI (type exit a couple of times). Check the ACL content. 
 ## Notes:
 
 - The solution scales pretty well. You can easily scale up the web server using a server with big CPU/memory, or use multiple servers to load balance. Kafka server can be scaled up into a cluser
+
+- The Kafka Topic is a key to leverage across multiple parts of the network. For example a topic can be setup for campus switches, and another for data center switches, and perhaps another for branch routers.
+
+- The notification sent via Kafka includes the file name already. However the script included at the moment only retrieves the "CA_Security_ACL_list_2017" file. A little more can be made to make that match what is in the notification. Here you would have a different ACL list for different Kafka topics.
+
