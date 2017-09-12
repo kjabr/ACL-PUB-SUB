@@ -93,7 +93,7 @@ If you get errors that the script can't reach the Kafka server it probably means
 
 Note that you can also launch the script from the NX-OS CLI. Simply place the script in the /bootflash/scripts directory and use this command:
 
-`guestshell run chvrf managemnet /bootflash/scripts/acl_sub.py'
+`guestshell run chvrf managemnet /bootflash/scripts/acl_sub.py`
 
 That maybe ok for testing but for a real life environment you want to run the script as a process in the background all the time. And hence it is done from Guestshell itself as noted above.
 
