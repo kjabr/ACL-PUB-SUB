@@ -91,6 +91,12 @@ nameserver 208.67.220.220
 
 If you get errors that the script can't reach the Kafka server it probably means you didn't do a 'chvrf management'. And make sure that Guestshell can ping both servers.
 
+Note that you can also launch the script from the NX-OS CLI. Simply place the script in the /bootflash/scripts directory and use this command:
+
+`guestshell run chvrf managemnet /bootflash/scripts/acl_sub.py'
+
+That maybe ok for testing but for a real life environment you want to run the script as a process in the background all the time. And hence it is done from Guestshell itself as noted above.
+
 - On the webserver send out a notification that the file is updated:
 
 `./commit_ACLs.py CA_Security_ACL_list_2017`
