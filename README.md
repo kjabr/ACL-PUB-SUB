@@ -83,7 +83,7 @@ nameserver 208.67.220.220
 
 ### Run the demo
 
-- Create an ACL on the switch, called say 'test'
+- Create an ACL on the switch, called, for example, 'test'
 - On the webserver add the ACL to the "CA_Security_ACL_list_2017" file with whatever ACEs you want
 - In Guestshell on the switch launch your Python script in the background:
 
@@ -91,7 +91,15 @@ nameserver 208.67.220.220
 
 If you get errors that the script can't reach the Kafka server it probably means you didn't do a 'chvrf management'. And make sure that Guestshell can ping both servers.
 
-Now go back the Nexus CLI (type exit a couple of times). Check the ACL content. It should get updated by whatever on the webserver. Make changes to the file on the webserver, a moment later it would appear on the local device.
+- On the webserver send out a notification that the file is updated:
+
+`./commit_ACLs.py CA_Security_ACL_list_2017`
+
+Note commit_ACLs.py script takes one argument. The filename in this case. In a more realistic environment you may want to add the Kafka topic name. That way you would associate the ACL file to a topic name. Network devices subscribe to a specific topic and hence the Kafka topic is how you would segment the places in the network.
+
+Now go back to the Nexus CLI (type exit a couple of times). Check the ACL content. It should get updated by whatever on the webserver. Make changes to the file on the webserver, run the commit_ACLs.py script, and a moment later it would get updated on the local device.
+
+You can have few or many switches (as in this example) gettting updated at about the same time. That is the goal of this project.
 
 ## Notes:
 
