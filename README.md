@@ -20,7 +20,7 @@ The solution needs 3 parts to make it work:
 - A server to run the Kafka server (broker)
 - A web server to serve the ACL file
 
-## Demo
+## Setup and Demo
 
 ### On the Kafka Server:
 
