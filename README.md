@@ -109,6 +109,12 @@ You can have few or many switches (as in this example) gettting updated at about
 
 - The notification sent via Kafka includes the file name already. However the script included at the moment only retrieves the "CA_Security_ACL_list_2017" file. A little more can be made to make that match what is in the notification. Here you would have a different ACL list for different Kafka topics.
 
+## Benefits:
+
+- Easy to use... just update the ACL list file and send the update
+- Big impact... hundreds if not thousands of network devices update very quickly
+- All built with freely available tools
+
 ## To do:
 
 - Add instructions to make sure the script in Guestshell survive reboots
