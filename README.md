@@ -28,7 +28,7 @@ Launch ZooKeeper and Kafka server on the Kafka server with a topic called "ACL".
 
 ### On the Web server:
 
-Install a web server daemon (say Apache2) on the web server. Then install the Kafka Python module:
+If not already running, install a web server daemon (say Apache2) on the web server. Then install the Kafka Python module:
 
 `pip install kafka-python`
 
