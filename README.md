@@ -52,11 +52,16 @@ no 50 permit ip 192.168.8.7/32 2.2.2.2/32
 ```
 You may want to place the commit_ACLs.py file in the same directory to make it a little easier to run.
 
-### on the Cisco switch (running NX-OS for example):
+### On the Cisco switch (running NX-OS for example):
 
-Guestshell, at least with NX-OS, uses the mgmt port to communicate out. So you want to first make sure the mgmt0 interface on the Nexus switch can reach the Kafka server and also the web server. Ping both to make sure it is working.
+Guestshell, at least with NX-OS, uses the mgmt port to communicate out. So you want to first make sure the mgmt0 interface on the Nexus switch can reach the Kafka server and also the web server. Ping both to make sure it is working. In some cases you may need to add a route to the VRF context:
 
-Now get into Guestshell using (guestshell command) and install the Kafka Python module. You do like this:
+```
+vrf context management
+  ip route 0.0.0.0/0 172.16.1.2
+```
+
+Now get into Guestshell using (guestshell command) and install the Kafka Python module. You can do it like this:
 
 - Change the VRF on guestshell to management:
 
