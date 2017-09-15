@@ -7,7 +7,7 @@ Imagine ACLs that live on many switches and routers. Currently to keep them up t
 
 ## Solution:
  
-- Centralize the ACLs on a server. Say a Linux server. Where it allows the admin to make the add/remove ACLs. 
+- Centralize the ACLs on a server. Say a Linux server. Where it allows the admin to add/remove ACLs and ACE (ACL lines)
 - Use a notification channel (Kafka in this project) where the network devices would get a quick alert that an update is available.
 - On the network devices pull the appropriate ACL file from the centralized server. Here using an http-GET using PyCurl
 - Network devices receive the updated list. Check the ACLs running locally. Calculate the diff and then apply the changes
