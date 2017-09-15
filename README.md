@@ -22,11 +22,11 @@ The solution needs 3 parts to make it work:
 
 ## Changes:
 - Sept 15, 2017:
- - On the server side (commit_acls) now creates a new file on the server with the _commit in the name. Provides a way to backtrack if needed
- - On the server side now any comment line from the ACL file are removed in the _commit file. Comment lines are lines that start with a pound (#) sign
- - On the server side now any empty line is removed in the _commit file
- - On the client side (pub-sub-acls) now reads the filename to pull from the Kafka message
- - On the client side now looks at the local ACLs, and if ACLs being fetched don't exist locally then create them
+  - On the server side (commit_acls) now creates a new file on the server with the _commit in the name. Provides a way to backtrack if needed
+  - On the server side now any comment line from the ACL file are removed in the _commit file. Comment lines are lines that start with a pound (#) sign
+  - On the server side now any empty line is removed in the _commit file
+  - On the client side (pub-sub-acls) now reads the filename to pull from the Kafka message
+  - On the client side now looks at the local ACLs, and if ACLs being fetched don't exist locally then create them
 
 ## Setup and Demo
 
