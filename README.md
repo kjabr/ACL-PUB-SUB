@@ -63,9 +63,9 @@ ip access list test4
 40 permit ip 192.168.7.6/32 143.18.5.1/32
 
 ```
-You may want to place the commit_ACLs.py file in the same directory to make it a little easier to run. Or perhaps create a soft link to the commit_ACL.py.
+You may want to place the commit_ACLs.py file in the same directory as the ACL file to make it a little easier to run. Or perhaps create a soft link to the commit_ACL.py.
 
-Note on the formatting of the ACL file. You can a pound "#" for comments. You can have as many comments as you want and anywhere in the file. You can also have blank lines. That helps make the file more readable.
+Note on the formatting of the ACL file. You can use a pound "#" for comments. You can have as many comments as you want and anywhere in the file. You can also have blank lines. That helps make the file more readable.
 
 ### On the Cisco switch (running NX-OS for example):
 
