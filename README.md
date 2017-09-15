@@ -30,35 +30,42 @@ The solution needs 3 parts to make it work:
 
 ## Setup and Demo
 
-### On the Kafka Server (aka Server Side):
+### On the Kafka Server:
 
 Launch ZooKeeper and Kafka server on the Kafka server with a topic called "ACL". Ensure the Kafka server listens on the local IP address.
 
-### On the Web server (aka Client Side):
+### On the Web server (aka Server Side):
 
 If not already running, install a web server daemon (say Apache2) on the web server. Then install the Kafka Python module:
 
 `pip install kafka-python`
 
-Then copy the file "commit-ACLs.py" to the web server. Create a file called "CA_Security_ACL_list_2017" in the /var/www/html directory. This would contain your ACLs. The format of the ACLs is simple. Here's an example:
+Then copy the file "commit-ACLs.py" to the web server. Create a file called "CA_Security_ACL_list_2017" in the /var/www/html directory. The file name can be anything.. This would contain your ACLs. The format of the ACLs is simple. Here's an example:
 
 ```
-root@Linux1:/var/www/html# more CA_Security_ACL_list_2017 
+root@Linux1:/var/www/html# more CA_Security_ACL_list_2017
+# security ACL
 ip access list test
-10 permit ip any 10.0.0.0/8
 40 permit ip any 172.16.0.0/16
 50 permit ip any 192.168.0.0/16
+
+# QoS ACL
 ip access list test3
 20 permit ip any 20.0.0.0/8
 30 permit ip any 22.22.22.22/32
+40 permit ip any 172.16.1.34/32
+
+# temp ACL
 ip access list test4
 10 permit ip any 1.1.1.1/32
 20 permit ip 192.168.7.4/32 143.10.5.1/32
 30 permit ip 192.168.7.5/32 143.18.5.1/32
 40 permit ip 192.168.7.6/32 143.18.5.1/32
-no 50 permit ip 192.168.8.7/32 2.2.2.2/32
+
 ```
-You may want to place the commit_ACLs.py file in the same directory to make it a little easier to run.
+You may want to place the commit_ACLs.py file in the same directory to make it a little easier to run. Or perhaps create a soft link to the commit_ACL.py.
+
+Note on the formatting of the ACL file. You can a pound "#" for comments. You can have as many comments as you want and anywhere in the file. You can also have blank lines. That helps make the file more readable.
 
 ### On the Cisco switch (running NX-OS for example):
 
@@ -92,7 +99,7 @@ nameserver 208.67.220.220
 ### Run the demo
 
 - Create an ACL on the switch, called, for example, 'test'
-- On the webserver add the ACL to the "CA_Security_ACL_list_2017" file with whatever ACEs you want
+- On the webserver add the ACL to the "CA_Security_ACL_list_2017" file with whatever ACEs you want (filename can be any name you want)
 - In Guestshell on the switch launch your Python script in the background:
 
 `./acl_sub.py &`
@@ -111,26 +118,24 @@ That maybe ok for testing but for a real life environment you want to run the sc
 
 Note commit_ACLs.py script takes one argument. The filename in this case. In a more realistic environment you may want to add the Kafka topic name. That way you would associate the ACL file to a topic name. Network devices subscribe to a specific topic and hence the Kafka topic is how you would segment the places in the network.
 
-Now go back to the Nexus CLI (type exit a couple of times). Check the ACL content. It should get updated by whatever on the webserver. Make changes to the file on the webserver, run the commit_ACLs.py script, and a moment later it would get updated on the local device.
+The commit_ACLs.py script creates new file on the server with the same name and appended with a "_commit". That file doesn't have the comments or empty lines. And it is what the remote clients pull.
+
+Now go back to the switch CLI and check the ACLs. They should get updated by whatever on the server. Make changes to the ACL file on the webserver, run the commit_ACLs.py script, and a moment later it would get updated on the local device.
 
 You can have few or many switches (as in this example) gettting updated at about the same time. That is the goal of this project.
 
 ## Notes:
 
-- The solution scales pretty well. You can easily scale up the web server using a server with big CPU/memory, or use multiple servers to load balance. Kafka server can be scaled up into a cluser
+- The solution scales pretty well. You can easily scale up the web server using a server with big CPU/memory, or use multiple servers to load balance. Kafka server can be scaled up into a cluster
 
-- The Kafka Topic is a key to leverage across multiple parts of the network. For example a topic can be setup for campus switches, and another for data center switches, and perhaps another for branch routers.
-
-- The notification sent via Kafka includes the file name already. However the script included at the moment only retrieves the "CA_Security_ACL_list_2017" file. A little more can be made to make that match what is in the notification. Here you would have a different ACL list for different Kafka topics.
+- The Kafka Topic is key to leverage across multiple parts of the network. For example a topic can be setup for campus switches, and another for data center switches, and perhaps another for branch routers.
 
 ## Benefits:
 
-- Easy to use... just update the ACL list file and send the update
-- Big impact... hundreds if not thousands of network devices update very quickly
+- Easy to use... just update the ACL list file and send the update via the commit script
+- Big impact... hundreds if not thousands of network devices update very quickly using a pull model
 - All built with freely available tools
 
 ## To do:
 
 - Add instructions to make sure the script in Guestshell survive reboots
-- Add Kafka topic to the commit_acls.py script
-- Change the pub-sub-acls.py script where it would parse the file name from the Kafka notification
