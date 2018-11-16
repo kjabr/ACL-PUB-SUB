@@ -47,3 +47,4 @@ make_new_file(new_file_name, newcontent)
 # remote nodes that receive the message would pull this file
 
 send_kafka('ACL_file_updated %s' % new_file_name)
+
