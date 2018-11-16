@@ -5,6 +5,8 @@ Use ACLs in a Pub-Sub model on Cisco switches and Routers. Goal is to centralize
 
 Imagine ACLs that live on many switches and routers. Currently to keep them up to date requires an admin or a tool to connect to each device to make the change. Doesn't matter if that is done via SSH or an API. If you have hundreds or even thousands of devices that becomes pretty cumbersome. This project solves this problem.
 
+In the current solution the config changes are applied serially. Maybe even using a batch of few devices at a time. Updating thousands of devices would take a long time. In the case of ACLs that are used for security, ACLs or routing policy the delay can be pretty cumbersome
+
 ## Proposed Solution
  
 - Centralize the ACLs on a server. Say a Linux server. Where it allows the admin to add/remove ACLs and ACE (ACL lines)
@@ -12,6 +14,7 @@ Imagine ACLs that live on many switches and routers. Currently to keep them up t
 - On the network devices pull the appropriate ACL file from the centralized server. Here using an http-GET using PyCurl
 - Network devices receive the updated list. Check the ACLs running locally. Calculate the diff and then apply the changes
 - Network devices wait for the next notification and then next update
+- The user of Kafka as a channel with a centralized web server (or servers) means that a huge amount of network devices can update their config almost instantaneously and simultaneously
 
 ### Cisco Products Technologies/ Services
 
