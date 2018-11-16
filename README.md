@@ -16,6 +16,16 @@ In the current solution the config changes are applied serially. Maybe even usin
 - Network devices wait for the next notification and then next update
 - The user of Kafka as a channel with a centralized web server (or servers) means that a huge amount of network devices can update their config almost instantaneously and simultaneously
 
+# Team Members
+
+
+**TODO:** ASIC projects must consist of a minimum of 2 SE’s
+representing a minimum of 2 segments. List names here
+
+* Khalil Jabr <kjabr@cisco.com> - GES
+* Ray Blair <rablair> - SLED
+
+
 ### Cisco Products Technologies/ Services
 
 The solution needs 3 parts to make it work:
