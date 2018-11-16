@@ -122,3 +122,5 @@ for message in consumer:
         print 'Changes to local config:'
         print '\n'.join(ACL_to_apply)
         cli(CLI_CMDS)
+
+        
