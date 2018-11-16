@@ -23,7 +23,7 @@ In the current solution the config changes are applied serially. Maybe even usin
 representing a minimum of 2 segments. List names here
 
 * Khalil Jabr <kjabr@cisco.com> - GES
-* Ray Blair <rablair> - SLED
+* Ray Blair <rablair@cisco.com> - SLED
 
 
 ### Cisco Products Technologies/ Services
