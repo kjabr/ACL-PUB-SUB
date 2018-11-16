@@ -1,11 +1,11 @@
 # ACL-PUB-SUB
-Use ACLs in a Pub-Sub model on Cisco switches and Routers
+Use ACLs in a Pub-Sub model on Cisco switches and Routers. Goal is to centralize the config (like ACLs) and use a PULL model to scale massively
 
-## Problem Statement:
+## Business/Technical Challenge
 
 Imagine ACLs that live on many switches and routers. Currently to keep them up to date requires an admin or a tool to connect to each device to make the change. Doesn't matter if that is done via SSH or an API. If you have hundreds or even thousands of devices that becomes pretty cumbersome. This project solves this problem.
 
-## Solution:
+## Proposed Solution
  
 - Centralize the ACLs on a server. Say a Linux server. Where it allows the admin to add/remove ACLs and ACE (ACL lines)
 - Use a notification channel (Kafka in this project) where the network devices would get a quick alert that an update is available.
@@ -13,7 +13,7 @@ Imagine ACLs that live on many switches and routers. Currently to keep them up t
 - Network devices receive the updated list. Check the ACLs running locally. Calculate the diff and then apply the changes
 - Network devices wait for the next notification and then next update
 
-## Components:
+### Cisco Products Technologies/ Services
 
 The solution needs 3 parts to make it work:
 - Cisco switches and routers with Guestshell (the code here was tested with Nexus 9ks but with some minor work can be made to work on all Cisco switches and routers that have implemented the Guestshell)
@@ -139,3 +139,15 @@ You can have few or many switches (as in this example) gettting updated at about
 ## To do:
 
 - Add instructions to make sure the script in Guestshell survive reboots
+
+## License
+
+Provided under Cisco Sample Code License, for details see [LICENSE](./LICENSE.md)
+
+## Code of Conduct
+
+Our code of conduct is available [here](./CODE_OF_CONDUCT.md)
+
+## Contributing
+
+See our contributing guidelines [here](./CONTRIBUTING.md)
