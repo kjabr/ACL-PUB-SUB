@@ -103,6 +103,10 @@ nameserver 208.67.220.220
 
 ### Run the demo
 
+After setting up the Kafka environment the next step is to get the switches to listen to the Kafka messages. This is done by using a Python script in Guestshell. What you are trying to accomplish is this:
+
+![alt text](https://github.com/kjabr/ACL-PUB-SUB/blob/master/Kafka.jpg)
+
 - Create an ACL on the switch, called, for example, 'test'
 - On the webserver add the ACL to the "CA_Security_ACL_list_2017" file with whatever ACEs you want (filename can be any name you want)
 - In Guestshell on the switch launch your Python script in the background:
