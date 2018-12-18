@@ -107,6 +107,10 @@ After setting up the Kafka environment the next step is to get the switches to l
 
 ![alt text](https://github.com/kjabr/ACL-PUB-SUB/blob/master/Kafka.jpg)
 
+As you can see the centralized webserver sends the Kafka messages to all the switches. This notifies the switches of that a change to the config file occured.
+
+To do that do the following:
+
 - Create an ACL on the switch, called, for example, 'test'
 - On the webserver add the ACL to the "CA_Security_ACL_list_2017" file with whatever ACEs you want (filename can be any name you want)
 - In Guestshell on the switch launch your Python script in the background:
@@ -128,6 +132,14 @@ That maybe ok for testing but for a real life environment you want to run the sc
 Note commit_ACLs.py script takes one argument. The filename in this case. In a more realistic environment you may want to add the Kafka topic name. That way you would associate the ACL file to a topic name. Network devices subscribe to a specific topic and hence the Kafka topic is how you would segment the places in the network.
 
 The commit_ACLs.py script creates new file on the server with the same name and appended with a "_commit". That file doesn't have the comments or empty lines. And it is what the remote clients pull.
+
+The next step, once the switches receive the notification they pull parse that Kafka message. They figure out that the ACL file on some centralized server changed then they launch an http-GET to get that config file (the PULL). Like this:
+
+![alt text](https://github.com/kjabr/ACL-PUB-SUB/blob/master/PULL_Config.jpg)
+
+Which is used to update the local config:
+
+![alt text](https://github.com/kjabr/ACL-PUB-SUB/blob/master/Update_Config.jpg)
 
 Now go back to the switch CLI and check the ACLs. They should get updated by whatever on the server. Make changes to the ACL file on the webserver, run the commit_ACLs.py script, and a moment later it would get updated on the local device.
 
